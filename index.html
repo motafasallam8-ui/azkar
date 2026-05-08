@@ -96,7 +96,7 @@
       z-index: 1;
       max-width: 860px;
       margin: 0 auto;
-      padding: 0 16px 60px;
+      padding: 200px 16px 60px;
     }
 
     /* HEADER */
@@ -105,11 +105,18 @@
       border-bottom: 1px solid var(--card-border);
       padding: 32px 16px 24px;
       text-align: center;
-      position: sticky;
+      position: fixed;
       top: 0;
+      left: 0;
+      right: 0;
       z-index: 100;
-      transition: background 0.6s;
+      transition: background 0.6s, transform 0.3s ease-out;
       box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+      transform: translateY(0);
+    }
+
+    header.hidden {
+      transform: translateY(-100%);
     }
 
     .header-ornament {
@@ -534,7 +541,7 @@
     /* RESPONSIVE DESIGN */
     @media (max-width: 768px) {
       .page-wrap {
-        padding: 0 12px 50px;
+        padding: 180px 12px 50px;
       }
 
       .main-title {
@@ -583,7 +590,7 @@
 
     @media (max-width: 480px) {
       .page-wrap {
-        padding: 0 10px 45px;
+        padding: 160px 10px 45px;
       }
 
       header {
@@ -683,7 +690,7 @@
     <div class="theme-btn-wrap">
       <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">
         <span class="icon" id="themeIcon">🌙</span>
-        <span id="themeBtnText">ازكار المساء</span>
+        <span id="themeBtnText">أَذْكَارُ المساء</span>
       </button>
     </div>
     <div style="max-width:500px;margin:0 auto">
@@ -1173,7 +1180,7 @@
           document.getElementById('sectionTitle').textContent = '[أَذْكَارُ الْمَسَاءِ]';
           document.getElementById('subTitle').textContent = 'حِصْنُ المُسْلِمِ';
           document.getElementById('themeIcon').textContent = '☀️';
-          document.getElementById('themeBtnText').textContent = 'ازكار الصباح';
+          document.getElementById('themeBtnText').textContent = ' أَذْكَارُ الصباح';
         } else {
           currentTheme = 'sabah';
           document.body.classList.remove('evening');
@@ -1181,7 +1188,7 @@
           document.getElementById('sectionTitle').textContent = '[أَذْكَارُ الصَّبَاحِ]';
           document.getElementById('subTitle').textContent = 'حِصْنُ المُسْلِمِ';
           document.getElementById('themeIcon').textContent = '🌙';
-          document.getElementById('themeBtnText').textContent = 'ازكار المساء';
+          document.getElementById('themeBtnText').textContent = 'أَذْكَارُ المساء';
         }
         renderAzkar();
         window.scrollTo({ top: 0 });
@@ -1189,8 +1196,23 @@
       }, 300);
     }
 
-    // Scroll top button
+    // Header hide/show on scroll
+    let lastScrollTop = 0;
+    const header = document.querySelector('header');
+    
     window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      
+      if (scrollTop > lastScrollTop && scrollTop > 100) {
+        // Scrolling down
+        header.classList.add('hidden');
+      } else {
+        // Scrolling up
+        header.classList.remove('hidden');
+      }
+      lastScrollTop = scrollTop;
+      
+      // Scroll top button
       const btn = document.getElementById('scrollTop');
       btn.classList.toggle('show', window.scrollY > 400);
     });
