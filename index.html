@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أذكار الصباح والمساء</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Scheherazade+New:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f5f5;
+    --bg2: #ffffff;
+    --card: #ffffff;
+    --card-border: #e0e0e0;
+    --accent: #d4a574;
+    --accent2: #c9944d;
+    --text: #333333;
+    --text-dim: #666666;
+    --ref: #5a7f99;
+    --counter-bg: #f0f0f0;
+    --counter-active: #c9944d;
+    --star: #d4a574;
+    --glow: rgba(212,165,116,0.15);
+    --header-from: #f9f9f9;
+    --header-to: #ffffff;
+    --btn-from: #f0f0f0;
+    --btn-to: #ffffff;
+  }
+  .evening {
+    --bg: #1a0d2e;
+    --bg2: #230f3d;
+    --card: #1e0d35;
+    --card-border: #3d1f6e;
+    --accent: #b07fd4;
+    --accent2: #d4a8f0;
+    --text: #ecddf8;
+    --text-dim: #a98ac5;
+    --ref: #9b7dcf;
+    --counter-bg: #2d1454;
+    --counter-active: #b07fd4;
+    --star: #d4a8f0;
+    --glow: rgba(176,127,212,0.15);
+    --header-from: #12082a;
+    --header-to: #1e1040;
+    --btn-from: #2d1454;
+    --btn-to: #1e0d35;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Scheherazade New', serif;
+    min-height: 100vh;
+    transition: background 0.6s ease, color 0.6s ease;
+    overflow-x: hidden;
+  }
+
+  /* stars background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 15%, var(--star) 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 40%, var(--star) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 55% 8%, var(--star) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 30%, var(--star) 0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 60%, var(--star) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 40% 70%, var(--star) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 85%, var(--star) 0%, transparent 100%),
+      radial-gradient(1px 1px at 15% 80%, var(--star) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 50%, var(--star) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 30% 20%, var(--star) 0%, transparent 100%),
+      radial-gradient(1px 1px at 75% 75%, var(--star) 0%, transparent 100%),
+      radial-gradient(1px 1px at 5% 55%, var(--star) 0%, transparent 100%),
+      radial-gradient(1px 1px at 48% 92%, var(--star) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 92% 12%, var(--star) 0%, transparent 100%),
+      radial-gradient(1px 1px at 20% 62%, var(--star) 0%, transparent 100%);
+    opacity: 0.35;
+    pointer-events: none;
+    transition: opacity 0.6s;
+    z-index: 0;
+  }
+
+  .page-wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 16px 60px;
+  }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(180deg, var(--header-from) 0%, var(--header-to) 100%);
+    border-bottom: 1px solid var(--card-border);
+    padding: 32px 16px 24px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    transition: background 0.6s;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.4);
+  }
+
+  .header-ornament {
+    font-size: 1.1rem;
+    color: var(--accent);
+    letter-spacing: 6px;
+    margin-bottom: 8px;
+    opacity: 0.7;
+  }
+
+  .main-title {
+    font-family: 'Amiri', serif;
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    font-weight: 700;
+    color: var(--accent2);
+    text-shadow: 0 0 30px var(--glow);
+    line-height: 1.3;
+    margin-bottom: 4px;
+    transition: color 0.6s;
+  }
+
+  .sub-title {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
+
+  /* THEME TOGGLE BUTTON */
+  .theme-btn-wrap {
+    margin-top: 18px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .theme-btn {
+    background: linear-gradient(135deg, var(--btn-from), var(--btn-to));
+    border: 1.5px solid var(--accent);
+    color: var(--accent2);
+    font-family: 'Scheherazade New', serif;
+    font-size: 1.05rem;
+    padding: 10px 28px;
+    border-radius: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px var(--glow);
+    letter-spacing: 0.5px;
+  }
+
+  .theme-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px var(--glow), 0 4px 20px rgba(0,0,0,0.3);
+  }
+
+  .theme-btn .icon {
+    font-size: 1.2rem;
+    transition: transform 0.5s;
+  }
+  .theme-btn:hover .icon { transform: rotate(20deg); }
+
+  /* collapse button */
+  .collapse-btn {
+    background: transparent;
+    border: 1px solid var(--card-border);
+    color: var(--accent2);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  .collapse-btn:hover {
+    background: var(--counter-bg);
+    border-color: var(--accent);
+  }
+
+  .collapse-btn.collapsed {
+    transform: rotate(180deg);
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 50px;
+    height: 6px;
+    margin: 20px 0 0;
+    overflow: hidden;
+  }
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 50px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+  .progress-label {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    margin-top: 6px;
+  }
+
+  /* ZIKR CARDS */
+  .azkar-list {
+    margin-top: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .zikr-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 20px 20px 16px;
+    transition: all 0.4s ease, opacity 0.5s, transform 0.5s, max-height 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    animation: fadeIn 0.4s ease both;
+    max-height: 1000px;
+  }
+
+  .zikr-card.hidden {
+    display: none;
+    opacity: 0;
+    max-height: 0;
+    padding: 0;
+    border: none;
+  }
+
+  .zikr-card.collapsed {
+    max-height: 80px;
+  }
+
+  .zikr-card.collapsed .card-content {
+    display: none;
+  }
+
+  .zikr-card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 3px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--accent), transparent);
+    border-radius: 0 16px 16px 0;
+  }
+
+  .zikr-card.done {
+    opacity: 0.55;
+    border-color: var(--accent);
+  }
+
+  .zikr-card.done::after {
+    content: '✓';
+    position: absolute;
+    top: 12px;
+    left: 14px;
+    color: var(--accent);
+    font-size: 1rem;
+    font-weight: bold;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .card-header.header-only {
+    margin-bottom: 0;
+  }
+
+  .zikr-num {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #0a0a0a;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Amiri', serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .zikr-text {
+    font-family: 'Scheherazade New', serif;
+    font-size: clamp(1.05rem, 2.5vw, 1.22rem);
+    line-height: 2;
+    color: var(--text);
+    flex: 1;
+  }
+
+  .zikr-ref {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 8px;
+    border-right: 2px solid var(--ref);
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    line-height: 1.8;
+  }
+
+  /* COUNTER */
+  .counter-wrap {
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .counter-dots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .dot {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--counter-bg);
+    border: 1.5px solid var(--card-border);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+  }
+
+  .dot.active {
+    background: var(--counter-active);
+    border-color: var(--counter-active);
+    box-shadow: 0 0 8px var(--glow);
+    transform: scale(1.1);
+  }
+
+  .dot:hover:not(.active) {
+    border-color: var(--accent);
+    transform: scale(1.05);
+  }
+
+  .counter-info {
+    font-size: 0.85rem;
+    color: var(--accent2);
+    font-weight: 600;
+    min-width: 50px;
+    text-align: center;
+  }
+
+  .reset-btn {
+    background: transparent;
+    border: 1px solid var(--card-border);
+    color: var(--text-dim);
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'Scheherazade New', serif;
+    transition: all 0.2s;
+  }
+  .reset-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* unlimited counter (for مائة مرة type) */
+  .unlimited-counter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  .count-btn {
+    background: var(--counter-bg);
+    border: 1.5px solid var(--accent);
+    color: var(--accent2);
+    font-size: 1.2rem;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .count-btn:hover {
+    background: var(--accent);
+    color: #0a0a0a;
+    transform: scale(1.1);
+  }
+
+  .count-display {
+    font-family: 'Amiri', serif;
+    font-size: 1.4rem;
+    color: var(--accent2);
+    min-width: 60px;
+    text-align: center;
+    background: var(--counter-bg);
+    padding: 4px 14px;
+    border-radius: 30px;
+    border: 1px solid var(--card-border);
+  }
+
+  .count-target {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+  }
+
+  /* bismillah banner */
+  .bismillah {
+    text-align: center;
+    font-family: 'Amiri', serif;
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    color: var(--accent);
+    padding: 24px 0 8px;
+    letter-spacing: 2px;
+    opacity: 0.9;
+  }
+
+  /* divider */
+  .ornament-divider {
+    text-align: center;
+    color: var(--accent);
+    opacity: 0.4;
+    font-size: 1.2rem;
+    margin: 4px 0;
+    letter-spacing: 8px;
+  }
+
+  /* section title */
+  .section-title {
+    font-family: 'Amiri', serif;
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    color: var(--accent2);
+    text-align: center;
+    margin: 24px 0 4px;
+    text-shadow: 0 0 20px var(--glow);
+    transition: color 0.6s;
+  }
+
+  /* pulse animation for completions */
+  @keyframes pulse-gold {
+    0% { box-shadow: 0 0 0 0 var(--glow); }
+    70% { box-shadow: 0 0 0 10px transparent; }
+    100% { box-shadow: 0 0 0 0 transparent; }
+  }
+  .dot.just-done { animation: pulse-gold 0.4s; }
+
+  /* scroll to top */
+  .scroll-top {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    background: var(--accent);
+    color: #0a0a0a;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    transition: all 0.3s;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 200;
+  }
+  .scroll-top.show { opacity: 1; pointer-events: all; }
+  .scroll-top:hover { transform: translateY(-3px); }
+
+  /* transition overlay */
+  .transition-overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .transition-overlay.active { opacity: 1; pointer-events: all; }
+
+  /* RESPONSIVE DESIGN */
+  @media (max-width: 768px) {
+    .page-wrap {
+      padding: 0 12px 50px;
+    }
+
+    .main-title {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+    }
+
+    .zikr-text {
+      font-size: clamp(0.95rem, 2vw, 1.1rem);
+    }
+
+    .counter-dots {
+      min-width: 150px;
+    }
+
+    .dot {
+      width: 18px;
+      height: 18px;
+    }
+
+    .counter-wrap {
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .collapse-btn {
+      width: 28px;
+      height: 28px;
+      font-size: 1rem;
+    }
+
+    .card-header {
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .zikr-card {
+      padding: 16px 16px 12px;
+    }
+
+    .zikr-ref {
+      font-size: 0.75rem;
+      margin-top: 8px;
+      padding: 6px 10px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .page-wrap {
+      padding: 0 10px 45px;
+    }
+
+    header {
+      padding: 20px 12px 16px;
+    }
+
+    .main-title {
+      font-size: 1.4rem;
+    }
+
+    .theme-btn {
+      font-size: 0.9rem;
+      padding: 8px 18px;
+    }
+
+    .zikr-card {
+      padding: 12px 12px 10px;
+      border-radius: 12px;
+      gap: 6px;
+    }
+
+    .zikr-card.collapsed {
+      max-height: 70px;
+    }
+
+    .zikr-num {
+      width: 28px;
+      height: 28px;
+      font-size: 0.8rem;
+    }
+
+    .zikr-text {
+      font-size: 0.9rem;
+      line-height: 1.8;
+    }
+
+    .counter-dots {
+      min-width: 120px;
+    }
+
+    .dot {
+      width: 16px;
+      height: 16px;
+    }
+
+    .counter-info {
+      font-size: 0.75rem;
+      min-width: 45px;
+    }
+
+    .reset-btn {
+      font-size: 0.65rem;
+      padding: 3px 8px;
+    }
+
+    .collapse-btn {
+      width: 24px;
+      height: 24px;
+      font-size: 0.9rem;
+    }
+
+    .count-btn {
+      width: 32px;
+      height: 32px;
+      font-size: 1rem;
+    }
+
+    .count-display {
+      font-size: 1.1rem;
+      padding: 3px 10px;
+      min-width: 50px;
+    }
+
+    .count-target {
+      font-size: 0.7rem;
+    }
+
+    .scroll-top {
+      width: 36px;
+      height: 36px;
+      font-size: 1rem;
+      bottom: 16px;
+      left: 16px;
+    }
+  }
+
+</style>
+</head>
+<body>
+
+<div class="transition-overlay" id="overlay"></div>
+
+<header>
+  <div class="header-ornament">✦ ✦ ✦</div>
+  <div class="main-title" id="mainTitle">أَذْكَارُ الصَّبَاحِ</div>
+  <div class="sub-title" id="subTitle">حِصْنُ المُسْلِمِ</div>
+  <div class="theme-btn-wrap">
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">
+      <span class="icon" id="themeIcon">🌙</span>
+      <span id="themeBtnText">ازكار المساء</span>
+    </button>
+  </div>
+  <div style="max-width:500px;margin:0 auto">
+    <div class="progress-wrap">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <div class="progress-label" id="progressLabel">٠ / ٠ مكتمل</div>
+  </div>
+</header>
+
+<div class="page-wrap">
+  <div class="bismillah">بِسْمِ اللهِ الرَّحْمَنِ الرَّحِيمِ{فَٱصْبِرْ عَلَىٰ مَا يَقُولُونَ وَسَبِّحْ بِحَمْدِ رَبِّكَ قَبْلَ طُلُوعِ ٱلشَّمْسِ وَقَبْلَ ٱلْغُرُوبِ (39)}</div>
+  <div class="ornament-divider">— ❧ —</div>
+  <div class="section-title" id="sectionTitle">[أَذْكَارُ الصَّبَاحِ]</div>
+  <div class="azkar-list" id="azkarList"></div>
+</div>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+const sabahData = [
+  {
+    num: '١',
+    text: 'الحمدُ للَّهِ وحدهُ، والصَّلاةُ والسَّلامُ على من لاَ نبيَّ بعدهُ',
+    ref: 'عن أنس يرفعه: «لأن أقعد مع قوم يذكرون اللَّه تعالى من صلاة الغداة حتى تطلع الشمس أحبُّ إليَّ من أن أُعتق أربعة من ولد إسماعيل...» أبو داود، برقم ٣٦٦٧، وحسنه الألباني في صحيح أبي داود، ٢/ ٦٩٨.',
+    count: 1
+  },
+  {
+    num: '٢',
+    text: 'أعوذُ باللَّهِ منَ الشَّيطانِ الرَّجيمِ ﴿اللَّهُ لاَ إِلَهَ إِلاَّ هُوَ الحَيُّ القَيُّومُ لاَ تَأخُذُهُ سِنَةٌ وَلاَ نَومٌ لَّهُ مَا فِي السَّمَوَاتِ وَمَا فِي الأَرضِ مَن ذَا الَّذِي يَشفَعُ عِندَهُ إِلاَّ بِإِذنِهِ يَعلَمُ مَا بَينَ أَيدِيهِم وَمَا خَلفَهُم وَلاَ يُحِيطُونَ بِشَيءٍ مِّن عِلمِهِ إِلاَّ بِمَا شَاء وَسِعَ كُرسِيُّهُ السَّمَوَاتِ وَالأَرضَ وَلاَ يَؤُودُهُ حِفظُهُمَا وَهُوَ العَلِيُّ العَظِيمُ﴾',
+    ref: 'سورة البقرة، الآية: ٢٥٥. من قالها حين يصبح أُجير من الجن حتى يمسي. أخرجه الحاكم، ١/ ٥٦٢، وصححه الألباني في صحيح الترغيب والترهيب، ١/ ٢٧٣.',
+    count: 1
+  },
+  {
+    num: '٣',
+    text: ' بسمِ اللهِ الرَّحمنِ الرحيم﴿قُل هُوَ اللَّهُ أَحَدٌ • اللَّهُ الصَّمَدُ • لَم يَلِد وَلَم يُولَد • وَلَم يَكُن لَّهُ كُفُوًا أَحَدٌ  ﴾ بسمِ اللهِ الرَّحمنِ الرحيم ﴿قُل أَعُوذُ بِرَبِّ الفَلَقِ • مِن شَرِّ مَا خَلَقَ • وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ • وَمِن شَرِّ النَّفَّاثَاتِ فِي العُقَدِ • وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ﴾ بسمِ اللهِ الرَّحمنِ الرحيم ﴿قُل أَعُوذُ بِرَبِّ النَّاسِ • مَلِكِ النَّاسِ • إِلَهِ النَّاسِ • مِن شَرِّ الوَسوَاسِ الخَنَّاسِ • الَّذِي يُوَسوِسُ فِي صُدُورِ النَّاسِ • مِنَ الجِنَّةِ وَ النَّاسِ﴾',
+    ref: 'ثلاثَ مرَّاتٍ. من قالها ثلاث مرات حين يصبح وحين يمسي كفته من كل شيء. أبو داود، ٤/ ٣٢٢، برقم ٥٠٨٢.',
+    count: 3
+  },
+  {
+    num: '٤',
+    text: '«أصبحنا وأصبحَ الملكُ للَّهِ، والحمدُ للَّهِ، لاَ إلهَ إلاَّ اللَّهُ وحدهُ لاَ شريكَ لهُ، لهُ الملكُ ولهُ الحمدُ وهوَ على كلِّ شيءٍ قديرٌ، ربِّ أسألكَ خيرَ ما في هذا اليومِ وخيرَ ما بعدهُ، وأعوذُ بكَ من شرِّ ما في هذا اليومِ وشرِّ ما بعدهُ، ربِّ أعوذُ بكَ منَ الكسلِ وسوءِ الكبرِ، ربِّ أعوذُ بكَ من عذابٍ في النَّارِ وعذابٍ في القبرِ»',
+    ref: 'مسلم، ٤/ ٢٠٨٨، برقم ٢٧٢٣.',
+    count: 1
+  },
+  {
+    num: '٥',
+    text: '«اللَّهمَّ بكَ أصبحنا، وبكَ أمسينا، وبكَ نحيا، وبكَ نموتُ وإليكَ النُّشورُ»',
+    ref: 'الترمذي، ٥/ ٤٦٦، برقم ٣٣٩١، وانظر: صحيح الترمذي ٣/ ١٤٢.',
+    count: 1
+  },
+  {
+    num: '٦',
+    text: '«اللَّهمَّ أنتَ ربِّي لا إلهَ إلاَّ أنتَ، خلقتني وأنا عبدكَ، وأنا على عهدكَ ووعدكَ ما استطعتُ، أعوذُ بكَ من شرِّ ما صنعتُ، أبوءُ لكَ بنعمتكَ عليَّ، وأبوءُ بذنبي فاغفر لي فإنَّهُ لاَ يغفرُ الذُّنوبَ إلاَّ أنتَ»',
+    ref: 'سيد الاستغفار. من قالها موقنًا بها حين يمسي فمات من ليلته دخل الجنة، وكذلك إذا أصبح. البخاري، ٧/ ١٥٠، برقم ٦٣٠٦.',
+    count: 1
+  },
+  {
+    num: '٧',
+    text: '«اللَّهمَّ إنِّي أصبحتُ أشهدكَ، وأشهدُ حملةَ عرشكَ، وملائكتكَ، وجميعَ خلقكَ، أنَّكَ أنتَ اللَّهُ لا إلهَ إلاَّ أنتَ وحدكَ لاَ شريكَ لكَ، وأنَّ محمَّدًا عبدكَ ورسولكَ»',
+    ref: 'أربعَ مرَّاتٍ. من قالها حين يصبح أو يمسي أربع مرات أعتقه اللَّه من النار. أبو داود، ٤/ ٣١٧، برقم ٥٠٧١.',
+    count: 4
+  },
+  {
+    num: '٨',
+    text: '«اللَّهمَّ ما أصبحَ بي من نعمةٍ أو بأحدٍ من خلقكَ فمنكَ وحدكَ لاَ شريكَ لكَ، فلكَ الحمدُ ولكَ الشُّكرُ»',
+    ref: 'من قالها حين يصبح فقد أدَّى شكر يومه. أبو داود، ٤/ ٣١٨، برقم ٥٠٧٥.',
+    count: 1
+  },
+  {
+    num: '٩',
+    text: '«اللَّهمَّ عافني في بدني، اللَّهمَّ عافني في سمعي، اللَّهمَّ عافني في بصري، لاَ إلهَ إلاَّ أنتَ. اللَّهمَّ إنِّي أعوذُ بكَ منَ الكفرِ، والفقرِ، وأعوذُ بكَ من عذابِ القبرِ، لاَ إلهَ إلاَّ أنتَ»',
+    ref: 'ثلاثَ مرَّاتٍ. أبو داود، ٤/ ٣٢٤، برقم ٥٠٩٢.',
+    count: 3
+  },
+  {
+    num: '١٠',
+    text: '«حسبيَ اللَّهُ لاَ إلهَ إلاَّ هوَ عليهِ توكَّلتُ وهوَ ربُّ العرشِ العظيمِ»',
+    ref: 'سبعَ مراتٍ. من قالها حين يصبح وحين يمسي سبع مرات كفاه اللَّه ما أهمّه. ابن السني، برقم ٧١، وأبو داود، ٤/ ٣٢١، برقم ٥٠٨١.',
+    count: 7
+  },
+  {
+    num: '١١',
+    text: '«اللَّهمَّ إنِّي أسألكَ العفوَ والعافيةَ في الدُّنيا والآخرةِ، اللَّهمَّ إنِّي أسألكَ العفوَ والعافيةَ: في ديني ودنيايَ وأهلي، ومالي، اللَّهمَّ استر عوراتي، وآمن روعاتي، اللَّهمَّ احفظني من بينِ يديَّ، ومن خلفي، وعن يميني، وعن شمالي، ومن فوقي، وأعوذُ بعظمتكَ أن أغتالَ من تحتي»',
+    ref: 'أبو داود، برقم ٥٠٧٤، وابن ماجه، برقم ٣٨٧١.',
+    count: 1
+  },
+  {
+    num: '١٢',
+    text: '«اللَّهمَّ عالمَ الغيبِ والشَّهادةِ فاطرَ السَّمواتِ والأرضِ، ربَّ كلِّ شيءٍ ومليكهُ، أشهدُ أن لاَ إلهَ إلاَّ أنتَ، أعوذُ بكَ من شرِّ نفسي، ومن شرِّ الشَّيطانِ وشركهِ، وأن أقترفَ على نفسي سوءًا، أو أجرَّهُ إلى مسلمٍ»',
+    ref: 'الترمذي، برقم ٣٣٩٢، وأبو داود، برقم ٥٠٦٧.',
+    count: 1
+  },
+  {
+    num: '١٣',
+    text: '«بسمِ اللَّهِ الَّذي لاَ يضرُّ معَ اسمهِ شيءٌ في الأرضِ ولاَ في السماءِ وهوَ السَّميعُ العليمُ»',
+    ref: 'ثلاثَ مرَّاتٍ. من قالها ثلاثًا إذا أصبح وثلاثًا إذا أمسى لم يضره شيء. أبو داود، ٤/ ٣٢٣، برقم ٥٠٨٨.',
+    count: 3
+  },
+  {
+    num: '١٤',
+    text: '«رضيتُ باللَّهِ ربًّا، وبالإسلامِ دينًا، وبمحمَّدٍ صلَّى اللهُ عليهِ وسلم نبيًّا»',
+    ref: 'ثلاثَ مرَّاتٍ. من قالها ثلاثًا حين يصبح وثلاثًا حين يمسي كان حقًا على اللَّه أن يرضيه يوم القيامة. أحمد، ٤/ ٣٣٧.',
+    count: 3
+  },
+  {
+    num: '١٥',
+    text: '«يا حيُّ يا قيُّومُ برحمتكَ أستغيثُ أصلح لي شأنيَ كلَّهُ ولاَ تكلني إلى نفسي طرفةَ عينٍ»',
+    ref: 'الحاكم وصححه، ووافقه الذهبي، ١/ ٥٤٥.',
+    count: 1
+  },
+  {
+    num: '١٦',
+    text: '«أصبحنا وأصبحَ الملكُ للَّهِ ربِّ العالمينَ، اللَّهمَّ إنِّي أسألكَ خيرَ هذا اليومِ: فتحهُ، ونصرهُ، ونورهُ، وبركتهُ، وهداهُ، وأعوذُ بكَ من شرِّ ما فيهِ وشرِّ ما بعدهُ»',
+    ref: 'أبو داود، ٤/ ٣٢٢، برقم ٥٠٨٤.',
+    count: 1
+  },
+  {
+    num: '١٧',
+    text: '«أصبحنا على فطرةِ الإسلامِ، وعلى كلمةِ الإخلاصِ، وعلى دينِ نبيِّنا محمَّدٍ صلَّى اللهُ عليهِ وسلم، وعلى ملَّةِ أبينا إبراهيمَ، حنيفًا مسلمًا وما كانَ منَ المشركينَ»',
+    ref: 'أحمد، ٣/ ٤٠٦، برقم ١٥٣٦٠، وابن السني، برقم ٣٤.',
+    count: 1
+  },
+  {
+    num: '١٨',
+    text: '«سبحانَ اللَّهِ وبحمدهِ»',
+    ref: 'مائة مرَّةٍ. من قالها مائة مرة حين يصبح وحين يمسي لم يأت أحد يوم القيامة بأفضل مما جاء به. مسلم، ٤/ ٢٠٧١، برقم ٢٦٩٢.',
+    count: 100
+  },
+  {
+    num: '١٩',
+    text: '«لاَ إلهَ إلاَّ اللَّهُ وحدهُ لاَ شريكَ لهُ، لهُ الملكُ ولهُ الحمدُ، وهوَ على كلِّ شيءٍ قديرٌ»',
+    ref: 'عشرَ مرَّات (أو مرَّةً واحدةً عندَ الكسلِ). النسائي في عمل اليوم والليلة، برقم ٢٤.',
+    count: 10
+  },
+  {
+    num: '٢٠',
+    text: '«لاَ إلهَ إلاَّ اللَّهُ، وحدهُ لاَ شريكَ لهُ، لهُ الملكُ ولهُ الحمدُ وهوَ على كلِّ شيءٍ قديرٌ»',
+    ref: 'مائةَ مرَّةٍ. من قالها مائة مرة في يوم كانت له عدل عشر رقاب، وكُتِبَ له مائة حسنة. البخاري، ٤/ ٩٥، برقم ٣٢٩٣.',
+    count: 100
+  },
+  {
+    num: '٢١',
+    text: '«سبحانَ اللَّهِ وبحمدهِ: عددَ خلقهِ، ورضا نفسهِ، وزنةَ عرشهِ، ومدادَ كلماتهِ»',
+    ref: 'ثلاثَ مرَّاتٍ. مسلم، ٤/ ٢٠٩٠، برقم ٢٧٢٦.',
+    count: 3
+  },
+  {
+    num: '٢٢',
+    text: '«اللَّهمَّ إنِّي أسألكَ علمًا نافعًا، ورزقًا طيِّبًا، وعملًا متقبَّلًا»',
+    ref: 'ابن ماجه، برقم ٩٢٥، وابن السني في عمل اليوم والليلة، برقم ٥٤.',
+    count: 1
+  },
+  {
+    num: '٢٣',
+    text: '«أستغفرُ اللَّهَ وأتوبُ إليهِ»',
+    ref: 'مائةَ مرَّةٍ في اليومِ. البخاري مع الفتح، ١١/ ١٠١، برقم ٦٣٠٧.',
+    count: 100
+  },
+  {
+    num: '٢٤',
+    text: '«اللَّهمَّ صلِّ وسلِّم على نبيِّنا محمَّدٍ»',
+    ref: 'عشرَ مرَّاتٍ. «من صلّى عليَّ حين يصبح عشرًا، وحين يمسي عشرًا، أدركته شفاعتي يوم القيامة». الطبراني بإسناد جيد.',
+    count: 10
+  }
+];
+
+const masaaData = [
+  {
+    num: '١',
+    text: 'الحمدُ للَّهِ وحدهُ، والصَّلاةُ والسَّلامُ على من لاَ نبيَّ بعدهُ',
+    ref: 'عن أنس يرفعه: «لأن أقعد مع قوم يذكرون اللَّه تعالى من صلاة الغداة حتى تطلع الشمس...» أبو داود، برقم ٣٦٦٧، وحسنه الألباني في صحيح أبي داود، ٢/ ٦٩٨.',
+    count: 1
+  },
+  {
+    num: '٢',
+    text: 'أعوذُ باللَّهِ منَ الشَّيطانِ الرَّجيمِ ﴿اللَّهُ لاَ إِلَهَ إِلاَّ هُوَ الحَيُّ القَيُّومُ لاَ تَأخُذُهُ سِنَةٌ وَلاَ نَومٌ لَّهُ مَا فِي السَّمَوَاتِ وَمَا فِي الأَرضِ مَن ذَا الَّذِي يَشفَعُ عِندَهُ إِلاَّ بِإِذنِهِ يَعلَمُ مَا بَينَ أَيدِيهِم وَمَا خَلفَهُم وَلاَ يُحِيطُونَ بِشَيءٍ مِّن عِلمِهِ إِلاَّ بِمَا شَاء وَسِعَ كُرسِيُّهُ السَّمَوَاتِ وَالأَرضَ وَلاَ يَؤُودُهُ حِفظُهُمَا وَهُوَ العَلِيُّ العَظِيمُ﴾',
+    ref: 'سورة البقرة، الآية: ٢٥٥. من قالها حين يمسي أُجير من الجن حتى يصبح. أخرجه الحاكم، ١/ ٥٦٢، وصححه الألباني.',
+    count: 1
+  },
+  {
+    num: '٣',
+    text: ' بسمِ اللهِ الرَّحمنِ الرحيم﴿قُل هُوَ اللَّهُ أَحَدٌ • اللَّهُ الصَّمَدُ • لَم يَلِد وَلَم يُولَد • وَلَم يَكُن لَّهُ كُفُوًا أَحَدٌ  ﴾ بسمِ اللهِ الرَّحمنِ الرحيم ﴿قُل أَعُوذُ بِرَبِّ الفَلَقِ • مِن شَرِّ مَا خَلَقَ • وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ • وَمِن شَرِّ النَّفَّاثَاتِ فِي العُقَدِ • وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ﴾ بسمِ اللهِ الرَّحمنِ الرحيم ﴿قُل أَعُوذُ بِرَبِّ النَّاسِ • مَلِكِ النَّاسِ • إِلَهِ النَّاسِ • مِن شَرِّ الوَسوَاسِ الخَنَّاسِ • الَّذِي يُوَسوِسُ فِي صُدُورِ النَّاسِ • مِنَ الجِنَّةِ وَ النَّاسِ﴾',
+    ref: 'ثلاثَ مرَّاتٍ. من قالها ثلاث مرات حين يصبح وحين يمسي كفته من كل شيء. أبو داود، ٤/ ٣٢٢، برقم ٥٠٨٢.',
+    count: 3
+  },
+  {
+    num: '٤',
+    text: '«أمسينا وأمسى الملكُ للَّهِ، والحمدُ للَّهِ، لاَ إلهَ إلاَّ اللَّهُ وحدهُ لاَ شريكَ لهُ، لهُ الملكُ ولهُ الحمدُ وهوَ على كلِّ شيءٍ قديرٌ، ربِّ أسألكَ خيرَ ما في هذه الليلةِ وخيرَ ما بعدها، وأعوذُ بكَ من شرِّ ما في هذه الليلةِ وشرِّ ما بعدها، ربِّ أعوذُ بكَ منَ الكسلِ وسوءِ الكبرِ، ربِّ أعوذُ بكَ من عذابٍ في النَّارِ وعذابٍ في القبرِ»',
+    ref: 'مسلم، ٤/ ٢٠٨٨، برقم ٢٧٢٣.',
+    count: 1
+  },
+  {
+    num: '٥',
+    text: '«اللَّهمَّ بكَ أمسينا، وبكَ أصبحنا، وبكَ نحيا، وبكَ نموتُ وإليكَ المصير»',
+    ref: 'الترمذي، ٥/ ٤٦٦، برقم ٣٣٩١، وانظر: صحيح الترمذي ٣/ ١٤٢.',
+    count: 1
+  },
+  {
+    num: '٦',
+    text: '«اللَّهمَّ أنتَ ربِّي لا إلهَ إلاَّ أنتَ، خلقتني وأنا عبدكَ، وأنا على عهدكَ ووعدكَ ما استطعتُ، أعوذُ بكَ من شرِّ ما صنعتُ، أبوءُ لكَ بنعمتكَ عليَّ، وأبوءُ بذنبي فاغفر لي فإنَّهُ لاَ يغفرُ الذُّنوبَ إلاَّ أنتَ»',
+    ref: 'سيد الاستغفار. من قالها موقنًا بها حين يمسي فمات من ليلته دخل الجنة. البخاري، ٧/ ١٥٠، برقم ٦٣٠٦.',
+    count: 1
+  },
+  {
+    num: '٧',
+    text: '«اللَّهمَّ إنِّي أمسيتُ أشهدكَ، وأشهدُ حملةَ عرشكَ، وملائكتكَ، وجميعَ خلقكَ، أنَّكَ أنتَ اللَّهُ لا إلهَ إلاَّ أنتَ وحدكَ لاَ شريكَ لكَ، وأنَّ محمَّدًا عبدكَ ورسولكَ»',
+    ref: 'أربعَ مرَّاتٍ. أعتقه اللَّه من النار. أبو داود، ٤/ ٣١٧، برقم ٥٠٧١.',
+    count: 4
+  },
+  {
+    num: '٨',
+    text: '«اللَّهمَّ ما أمسى بي من نعمةٍ أو بأحدٍ من خلقكَ فمنكَ وحدكَ لاَ شريكَ لكَ، فلكَ الحمدُ ولكَ الشُّكرُ»',
+    ref: 'من قالها حين يمسي فقد أدَّى شكر ليلته. أبو داود، ٤/ ٣١٨، برقم ٥٠٧٥.',
+    count: 1
+  },
+  {
+    num: '٩',
+    text: '«اللَّهمَّ عافني في بدني، اللَّهمَّ عافني في سمعي، اللَّهمَّ عافني في بصري، لاَ إلهَ إلاَّ أنتَ. اللَّهمَّ إنِّي أعوذُ بكَ منَ الكفرِ، والفقرِ، وأعوذُ بكَ من عذابِ القبرِ، لاَ إلهَ إلاَّ أنتَ»',
+    ref: 'ثلاثَ مرَّاتٍ. أبو داود، ٤/ ٣٢٤، برقم ٥٠٩٢.',
+    count: 3
+  },
+  {
+    num: '١٠',
+    text: '«حسبيَ اللَّهُ لاَ إلهَ إلاَّ هوَ عليهِ توكَّلتُ وهوَ ربُّ العرشِ العظيمِ»',
+    ref: 'سبعَ مراتٍ. من قالها سبع مرات حين يصبح وحين يمسي كفاه اللَّه ما أهمّه. أبو داود، ٤/ ٣٢١، برقم ٥٠٨١.',
+    count: 7
+  },
+  {
+    num: '١١',
+    text: '«اللَّهمَّ إنِّي أسألكَ العفوَ والعافيةَ في الدُّنيا والآخرةِ، اللَّهمَّ إنِّي أسألكَ العفوَ والعافيةَ: في ديني ودنيايَ وأهلي، ومالي، اللَّهمَّ استر عوراتي، وآمن روعاتي، اللَّهمَّ احفظني من بينِ يديَّ، ومن خلفي، وعن يميني، وعن شمالي، ومن فوقي، وأعوذُ بعظمتكَ أن أغتالَ من تحتي»',
+    ref: 'أبو داود، برقم ٥٠٧٤، وابن ماجه، برقم ٣٨٧١.',
+    count: 1
+  },
+  {
+    num: '١٢',
+    text: '«اللَّهمَّ عالمَ الغيبِ والشَّهادةِ فاطرَ السَّمواتِ والأرضِ، ربَّ كلِّ شيءٍ ومليكهُ، أشهدُ أن لاَ إلهَ إلاَّ أنتَ، أعوذُ بكَ من شرِّ نفسي، ومن شرِّ الشَّيطانِ وشركهِ، وأن أقترفَ على نفسي سوءًا، أو أجرَّهُ إلى مسلمٍ»',
+    ref: 'الترمذي، برقم ٣٣٩٢، وأبو داود، برقم ٥٠٦٧.',
+    count: 1
+  },
+  {
+    num: '١٣',
+    text: '«بسمِ اللَّهِ الَّذي لاَ يضرُّ معَ اسمهِ شيءٌ في الأرضِ ولاَ في السماءِ وهوَ السَّميعُ العليمُ»',
+    ref: 'ثلاثَ مرَّاتٍ. من قالها لم يضره شيء. أبو داود، ٤/ ٣٢٣، برقم ٥٠٨٨.',
+    count: 3
+  },
+  {
+    num: '١٤',
+    text: '«رضيتُ باللَّهِ ربًّا، وبالإسلامِ دينًا، وبمحمَّدٍ صلَّى اللهُ عليهِ وسلم نبيًّا»',
+    ref: 'ثلاثَ مرَّاتٍ. كان حقًا على اللَّه أن يرضيه يوم القيامة. أبو داود، ٤/ ٣١٨، برقم ١٥٣١.',
+    count: 3
+  },
+  {
+    num: '١٥',
+    text: '«يا حيُّ يا قيُّومُ برحمتكَ أستغيثُ أصلح لي شأنيَ كلَّهُ ولاَ تكلني إلى نفسي طرفةَ عينٍ»',
+    ref: 'الحاكم وصححه، ووافقه الذهبي، ١/ ٥٤٥.',
+    count: 1
+  },
+  {
+    num: '١٦',
+    text: '«أمسينا وأمسى الملكُ للَّهِ ربِّ العالمينَ، اللَّهمَّ إنِّي أسألكَ خيرَ هذهِ الليلة: فتحها، ونصرها، ونورها، وبركتها، وهداها، وأعوذُ بكَ من شرِّ ما فيها وشرِّ ما بعدها»',
+    ref: 'أبو داود، ٤/ ٣٢٢، برقم ٥٠٨٤.',
+    count: 1
+  },
+  {
+    num: '١٧',
+    text: '«أمسينا على فطرةِ الإسلامِ، وعلى كلمةِ الإخلاصِ، وعلى دينِ نبيِّنا محمَّدٍ صلَّى اللهُ عليهِ وسلم، وعلى ملَّةِ أبينا إبراهيمَ، حنيفًا مسلمًا وما كانَ منَ المشركينَ»',
+    ref: 'أحمد، ٣/ ٤٠٦، برقم ١٥٣٦٠، وابن السني في عمل اليوم والليلة، برقم ٣٤.',
+    count: 1
+  },
+  {
+    num: '١٨',
+    text: '«سبحانَ اللَّهِ وبحمدهِ»',
+    ref: 'مائة مرَّةٍ. من قالها مائة مرة حين يصبح وحين يمسي لم يأت أحد بأفضل مما جاء به. مسلم، ٤/ ٢٠٧١، برقم ٢٦٩٢.',
+    count: 100
+  },
+  {
+    num: '١٩',
+    text: '«لاَ إلهَ إلاَّ اللَّهُ وحدهُ لاَ شريكَ لهُ، لهُ الملكُ ولهُ الحمدُ، وهوَ على كلِّ شيءٍ قديرٌ»',
+    ref: 'عشرَ مرَّات (أو مرَّةً واحدةً عندَ الكسلِ). النسائي في عمل اليوم والليلة، برقم ٢٤.',
+    count: 10
+  },
+  {
+    num: '٢٠',
+    text: '«أستغفرُ اللَّهَ وأتوبُ إليهِ»',
+    ref: 'مائةَ مرَّةٍ في اليومِ. البخاري مع الفتح، ١١/ ١٠١، برقم ٦٣٠٧.',
+    count: 100
+  },
+  {
+    num: '٢١',
+    text: '«أعوذُ بكلماتِ اللَّهِ التَّامَّاتِ من شرِّ ما خلقَ»',
+    ref: 'ثلاثَ مرَّاتٍ. من قالها حين يمسي ثلاث مرات لم تضرّه حُمَة تلك الليلة. أحمد، ٢/ ٢٩٠، برقم ٧٨٩٨.',
+    count: 3
+  },
+  {
+    num: '٢٢',
+    text: '«اللَّهمَّ صلِّ وسلِّم على نبيِّنا محمَّدٍ»',
+    ref: 'عشرَ مرَّاتٍ. «من صلّى عليَّ حين يصبح عشرًا وحين يمسي عشرًا أدركته شفاعتي يوم القيامة». الطبراني بإسناد جيد.',
+    count: 10
+  }
+];
+
+// State
+let currentTheme = 'sabah'; // sabah or masaa
+let counters = {}; // key: `${theme}_${index}` => current count
+let collapsed = {}; // key: `${theme}_${index}` => true if collapsed
+
+function toArabicNum(n) {
+  return n.toString().replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+}
+
+function buildCounterHTML(zikr, cardIndex, theme) {
+  const key = `${theme}_${cardIndex}`;
+  const current = counters[key] || 0;
+  const target = zikr.count;
+
+  if (target === 1) {
+    // Single click done button
+    return `
+      <div class="counter-wrap">
+        <button class="theme-btn" style="padding:7px 18px;font-size:0.85rem;margin-top:4px"
+          onclick="markDone(${cardIndex})" id="doneBtn_${cardIndex}">
+          <span>✓</span> تم
+        </button>
+      </div>`;
+  }
+
+  if (target <= 20) {
+    // Dot style
+    let dots = '';
+    for (let i = 0; i < target; i++) {
+      dots += `<div class="dot ${i < current ? 'active' : ''}" onclick="tapDot(${cardIndex}, ${i})" id="dot_${cardIndex}_${i}"></div>`;
+    }
+    return `
+      <div class="counter-wrap">
+        <div class="counter-dots">${dots}</div>
+        <div class="counter-info">${toArabicNum(current)}/${toArabicNum(target)}</div>
+        <button class="reset-btn" onclick="resetCounter(${cardIndex})">إعادة</button>
+      </div>`;
+  }
+
+  // Large count (100 etc)
+  return `
+    <div class="unlimited-counter">
+      <button class="count-btn" onclick="incrementCount(${cardIndex})">+</button>
+      <div class="count-display" id="countDisplay_${cardIndex}">${toArabicNum(current)}</div>
+      <div class="count-target">/ ${toArabicNum(target)}</div>
+      <button class="reset-btn" onclick="resetCounter(${cardIndex})">إعادة</button>
+    </div>`;
+}
+
+function renderAzkar() {
+  const data = currentTheme === 'sabah' ? sabahData : masaaData;
+  const list = document.getElementById('azkarList');
+  list.innerHTML = '';
+  data.forEach((z, i) => {
+    const key = `${currentTheme}_${i}`;
+    const done = isDone(i);
+    const isCollapsed = collapsed[key] || false;
+    const card = document.createElement('div');
+    card.className = 'zikr-card' + (done ? ' done' : '') + (isCollapsed ? ' collapsed' : '');
+    if (done) {
+      card.classList.add('hidden');
+    }
+    card.id = `card_${i}`;
+    card.style.animationDelay = `${i * 0.04}s`;
+    card.innerHTML = `
+      <div class="card-header">
+        <div class="zikr-num">${z.num}</div>
+        <div class="zikr-text">${z.text}</div>
+        <button class="collapse-btn ${isCollapsed ? 'collapsed' : ''}" onclick="toggleCollapse(${i})" title="إغلاق/فتح">▼</button>
+      </div>
+      <div class="card-content">
+        <div class="zikr-ref">${z.ref}</div>
+        ${buildCounterHTML(z, i, currentTheme)}
+      </div>
+    `;
+    list.appendChild(card);
+  });
+  updateProgress();
+}
+
+function isDone(cardIndex) {
+  const key = `${currentTheme}_${cardIndex}`;
+  const data = currentTheme === 'sabah' ? sabahData : masaaData;
+  const target = data[cardIndex].count;
+  return (counters[key] || 0) >= target;
+}
+
+function toggleCollapse(cardIndex) {
+  const key = `${currentTheme}_${cardIndex}`;
+  collapsed[key] = !collapsed[key];
+  const card = document.getElementById(`card_${cardIndex}`);
+  const btn = card.querySelector('.collapse-btn');
+  if (collapsed[key]) {
+    card.classList.add('collapsed');
+    btn.classList.add('collapsed');
+  } else {
+    card.classList.remove('collapsed');
+    btn.classList.remove('collapsed');
+  }
+}
+
+function markDone(cardIndex) {
+  const key = `${currentTheme}_${cardIndex}`;
+  counters[key] = 1;
+  const card = document.getElementById(`card_${cardIndex}`);
+  if (card) {
+    card.classList.add('done');
+    card.classList.add('hidden');
+  }
+  updateProgress();
+}
+
+function tapDot(cardIndex, dotIndex) {
+  const key = `${currentTheme}_${cardIndex}`;
+  const data = currentTheme === 'sabah' ? sabahData : masaaData;
+  const target = data[cardIndex].count;
+  const newVal = dotIndex + 1;
+  counters[key] = newVal;
+
+  // Update dots
+  for (let i = 0; i < target; i++) {
+    const dot = document.getElementById(`dot_${cardIndex}_${i}`);
+    if (dot) {
+      if (i < newVal) {
+        dot.classList.add('active');
+        if (i === dotIndex) {
+          dot.classList.add('just-done');
+          setTimeout(() => dot.classList.remove('just-done'), 400);
+        }
+      } else {
+        dot.classList.remove('active');
+      }
+    }
+  }
+
+  // Update info
+  const info = document.querySelector(`#card_${cardIndex} .counter-info`);
+  if (info) info.textContent = `${toArabicNum(newVal)}/${toArabicNum(target)}`;
+
+  const card = document.getElementById(`card_${cardIndex}`);
+  if (newVal >= target) {
+    card.classList.add('done');
+    card.classList.add('hidden');
+  } else {
+    card.classList.remove('done');
+    card.classList.remove('hidden');
+  }
+  updateProgress();
+}
+
+function incrementCount(cardIndex) {
+  const key = `${currentTheme}_${cardIndex}`;
+  const data = currentTheme === 'sabah' ? sabahData : masaaData;
+  const target = data[cardIndex].count;
+  const newVal = Math.min((counters[key] || 0) + 1, target);
+  counters[key] = newVal;
+  
+  const display = document.getElementById(`countDisplay_${cardIndex}`);
+  if (display) display.textContent = toArabicNum(counters[key]);
+  
+  const card = document.getElementById(`card_${cardIndex}`);
+  if (counters[key] >= target) {
+    card.classList.add('done');
+    card.classList.add('hidden');
+  } else {
+    card.classList.remove('done');
+    card.classList.remove('hidden');
+  }
+  updateProgress();
+}
+
+function resetCounter(cardIndex) {
+  const key = `${currentTheme}_${cardIndex}`;
+  counters[key] = 0;
+  const card = document.getElementById(`card_${cardIndex}`);
+  if (card) {
+    card.classList.remove('done');
+    card.classList.remove('hidden');
+    // Re-render counter section only
+    const data = currentTheme === 'sabah' ? sabahData : masaaData;
+    const counterHTML = buildCounterHTML(data[cardIndex], cardIndex, currentTheme);
+    const existing = card.querySelector('.counter-wrap, .unlimited-counter');
+    if (existing) existing.outerHTML = counterHTML;
+    else {
+      const tmp = document.createElement('div');
+      tmp.innerHTML = counterHTML;
+      card.appendChild(tmp.firstChild);
+    }
+    renderAzkar();
+  }
+  updateProgress();
+}
+
+function updateProgress() {
+  const data = currentTheme === 'sabah' ? sabahData : masaaData;
+  const total = data.length;
+  let done = 0;
+  data.forEach((_, i) => { if (isDone(i)) done++; });
+  const pct = total ? (done / total * 100) : 0;
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent =
+    `${toArabicNum(done)} / ${toArabicNum(total)} مكتمل`;
+}
+
+function toggleTheme() {
+  const overlay = document.getElementById('overlay');
+  overlay.classList.add('active');
+  setTimeout(() => {
+    if (currentTheme === 'sabah') {
+      currentTheme = 'masaa';
+      document.body.classList.add('evening');
+      document.getElementById('mainTitle').textContent = 'أَذْكَارُ الْمَسَاءِ';
+      document.getElementById('sectionTitle').textContent = '[أَذْكَارُ الْمَسَاءِ]';
+      document.getElementById('subTitle').textContent = 'حِصْنُ المُسْلِمِ';
+      document.getElementById('themeIcon').textContent = '☀️';
+      document.getElementById('themeBtnText').textContent = 'ازكار الصباح';
+    } else {
+      currentTheme = 'sabah';
+      document.body.classList.remove('evening');
+      document.getElementById('mainTitle').textContent = 'أَذْكَارُ الصَّبَاحِ';
+      document.getElementById('sectionTitle').textContent = '[أَذْكَارُ الصَّبَاحِ]';
+      document.getElementById('subTitle').textContent = 'حِصْنُ المُسْلِمِ';
+      document.getElementById('themeIcon').textContent = '🌙';
+      document.getElementById('themeBtnText').textContent = 'ازكار المساء';
+    }
+    renderAzkar();
+    window.scrollTo({ top: 0 });
+    overlay.classList.remove('active');
+  }, 300);
+}
+
+// Scroll top button
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('scrollTop');
+  btn.classList.toggle('show', window.scrollY > 400);
+});
+
+// Init
+renderAzkar();
+</script>
+</body>
+</html>
