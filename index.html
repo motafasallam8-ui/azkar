@@ -990,21 +990,6 @@ function buildCounterHTML(zikr, cardIndex, theme) {
         </button>
       </div>`;
   }
-
-  if (target <= 20) {
-    // Dot style
-    let dots = '';
-    for (let i = 0; i < target; i++) {
-      dots += `<div class="dot ${i < current ? 'active' : ''}" onclick="tapDot(${cardIndex}, ${i})" id="dot_${cardIndex}_${i}"></div>`;
-    }
-    return `
-      <div class="counter-wrap">
-        <div class="counter-dots">${dots}</div>
-        <div class="counter-info">${toArabicNum(current)}/${toArabicNum(target)}</div>
-        <button class="reset-btn" onclick="resetCounter(${cardIndex})">إعادة</button>
-      </div>`;
-  }
-
   // Large count (100 etc)
   return `
     <div class="unlimited-counter">
